@@ -1,18 +1,45 @@
 # V2Ray 安装配置
 
+```text
+本文不保证时效性，不保证文内链接的可用性，不保证最终构建服务的稳定性，仅供学习。  
+如果你看不懂本文在干什么，请直接寻找第三方服务，切勿浪费时间，已关闭issue板块，感谢。
+```
+
+- [V2Ray 安装配置](#v2ray-安装配置)
+  - [1. 代理的基本知识](#1-代理的基本知识)
+    - [什么是代理服务器？](#什么是代理服务器)
+    - [什么时候我们需要代理服务器？](#什么时候我们需要代理服务器)
+  - [2. 代理服务器的选择](#2-代理服务器的选择)
+    - [网络延迟](#网络延迟)
+    - [操作系统](#操作系统)
+  - [3. 什么是 V2Ray (Project V)](#3-什么是-v2ray-project-v)
+  - [4. 如何在服务器端安装配置 V2Ray 服务](#4-如何在服务器端安装配置-v2ray-服务)
+    - [安装 V2Ray 服务](#安装-v2ray-服务)
+    - [启用 V2Ray 服务](#启用-v2ray-服务)
+    - [配置 V2Ray服务](#配置-v2ray服务)
+  - [5. 如何在客户端配置安装 V2RayN / V2RayNG](#5-如何在客户端配置安装-v2rayn--v2rayng)
+  - [ping 使用指南](#ping-使用指南)
+  - [tracert 使用指南](#tracert-使用指南)
+  - [iperf3 使用指南](#iperf3-使用指南)
+  - [SSH 使用简要指南](#ssh-使用简要指南)
+  - [防火墙端口配置](#防火墙端口配置)
+  - [关于ipv6](#关于ipv6)
+  - [题外话](#题外话)
+
 ## 1. 代理的基本知识
 
 在开始设置之前，推荐你阅读本段内容以了解基本的代理相关知识。
 
 ### 什么是代理服务器？
 
-代理服务器（Proxy Server）是一种位于您的设备（如电脑、手机）和互联网之间的中间服务器。它的核心功能是 **“代你办事”** 。  
+代理服务器（Proxy Server）是一种位于您的设备（如电脑、手机）和互联网之间的中间服务器，它的核心功能是 **“代你办事”** 。  
 
 您可以把它想象成一位中间人或代理人：  
+
 &emsp;没有代理时： 您的设备 → 直接访问网站  
 &emsp;使用代理时： 您的设备 → 代理服务器 → 网站  
 
-当您使用代理服务器时，您的网络流量不会直接发送到目标网站，而是先发送到代理服务器，由代理服务器替你访问网站，然后再将网站的内容返回给您。  
+当您使用代理服务器时，网络流量不会直接发送到目标网站，而是先发送到代理服务器，由代理服务器替你访问网站，然后再将网站的内容返回给您。  
 
 ### 什么时候我们需要代理服务器？
 
@@ -30,23 +57,24 @@
 
 ### 网络延迟
 
-网络延迟（Ping值）直接决定了代理服务的体验。选择的目标不是单纯追求“国外服务器”，而是根据实际应用场景找到延迟最低、最稳定的路径。
+网络延迟（Ping值）直接决定了代理服务的体验。  
+选择的目标不是单纯追求“国外服务器”，而是根据实际应用场景找到延迟最低、最稳定的路径。
 
-1. 明确需求
-    - 优化国内访问（游戏加速、跨网访问）
-    - 海外业务访问（企业办公、学术研究）
-    - 全局网络优化
+- 明确需求
+  - 优化国内访问（游戏加速、跨网访问）
+  - 海外业务访问（企业办公、学术研究）
+  - 全局网络优化
 
-2. 测试和选择
-    - Step 1: 获取测试IP：向服务商索取或在其官网找到服务器的测试IP地址。
-    - Step 2: 本地延迟测试：  
+- 测试和选择
+  - Step 1: 获取测试IP：向服务商索取或在其官网找到服务器的测试IP地址。
+  - Step 2: 本地延迟测试：  
         &emsp;在本地电脑的命令提示符或PowerShell中，执行 [ping](#ping-使用指南) &lt;服务器IP&gt;。  
         &emsp;观察结果：时间=&lt;XX&gt;ms 就是延迟。通常，&lt; 50ms 极佳（国内），50ms-150ms 良好（跨境优质线路），&gt;200ms 会有明显延迟感。  
         &emsp;关键点：不仅要看延迟，还要看稳定性（是否跳ping，即延迟数值波动很大）。  
-    - Step 3: 路由追踪测试（更高级）：  
-        &emsp;执行 tracert &lt;服务器IP&gt;（Windows）或 traceroute &lt;服务器IP&gt;（Linux/Mac）。  
+  - Step 3: 路由追踪测试（更高级）：  
+        &emsp;执行 [tracert](#tracert-使用指南) &lt;服务器IP&gt;（Windows）或 traceroute &lt;服务器IP&gt;（Linux/Mac）。  
         &emsp;观察结果：这条命令会显示数据包从你电脑到服务器经过的每一跳（路由器）。你可以看到在哪里延迟突然增高，从而判断网络拥堵点。  
-    - Step 4: 带宽测试：  
+  - Step 4: 带宽测试：  
         &emsp;使用 [iperf3](#iperf3-使用指南) 或服务商提供的测试URL，在测试服务器的上传/下载速度，确保带宽满足你的需求。
 
 ### 操作系统
@@ -60,14 +88,54 @@
 
 本文将以CentOS为例讲解v2ray代理服务的安装与配置，客户端操作系统为Windows/Android，其他系统请参考官方文档进行配置安装。
 
-## 3. 什么是 V2Ray
+## 3. 什么是 V2Ray (Project V)
 
-简而言之，一个开源的网络代理工具。  
-TODO
+简而言之，一个开源的网络代理工具，如有兴趣请阅读下面文档。  
+[Project V](https://www.v2ray.com/)：Project V（V2Ray）官方文档  
+[v2ray manual](https://github.com/v2ray/manual)：已过时，请查看 [V2Fly](https://github.com/v2fly/v2fly-github-io)。  
+[V2Ray 配置指南（非官方）](https://toutyrater.github.io/)
+[fhs-install-v2ray（一键部署v2ray）]("https://github.com/v2fly/fhs-install-v2ray")
 
-## 4. 如何在服务器端配置安装 V2Ray 服务
+## 4. 如何在服务器端安装配置 V2Ray 服务
 
-TODO
+本文不对如何购买租赁服务器提供任何指导性意见，如有需要请自行研究学习。  
+白话版： 如果你都不知道去哪里购买租赁服务器，那么本文不适合你，请使用第三方的服务。
+
+在此之前，请务必先了解[SSH](#ssh-使用简要指南)的用法。
+
+### 安装 V2Ray 服务
+
+```text
+SSH连接到远程服务器后，使用以下一键部署脚本。
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+当执行完毕后，看到有 info: V2Ray vX.XX.XX is installed. 的提示信息，即为安装完毕。
+```
+
+<img src="./images/V2RayInstalled.png" alt="V2RayInstalledImage" style="width: 50%; height: auto;">
+
+### 启用 V2Ray 服务
+
+```text
+经过上述步骤，V2Ray的组件已经成功安装到了服务器上，但是服务还未启用。
+继续执行以下两条命令来启用并启动服务。
+systemctl enable v2ray
+systemctl start v2ray
+最后执行以下命令来检查服务状态。
+systemctl status v2ray
+```
+
+<img src="./images/V2RayServiceCreated.png" alt="V2RayServiceCreated" style="width: 50%; height: auto;">
+
+### 配置 V2Ray服务
+
+```text
+你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows）。
+
+
+```
+
+
+
 
 ## 5. 如何在客户端配置安装 V2RayN / V2RayNG
 
@@ -76,7 +144,7 @@ TODO
 ## ping 使用指南
 
     TODO  
-<img src="./images/PingServer.png" alt="示例图片" style="width: 30%; height: auto;">
+<img src="./images/PingServer.png" alt="PingServerImage" style="width: 30%; height: auto;">
 
 ## tracert 使用指南
 
@@ -86,8 +154,17 @@ TODO
 
     TODO
 
+## SSH 使用简要指南
+
+    TODO
+
 ## 防火墙端口配置
 
+    TODO
+
+## 关于ipv6
+
+  [Test Ipv6](https://test-ipv6.com)
     TODO
 
 ## 题外话
