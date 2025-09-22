@@ -93,7 +93,7 @@
 简而言之，一个开源的网络代理工具，如有兴趣请阅读下面文档。  
 [Project V](https://www.v2ray.com/)：Project V（V2Ray）官方文档  
 [v2ray manual](https://github.com/v2ray/manual)：已过时，请查看 [V2Fly](https://github.com/v2fly/v2fly-github-io)。  
-[V2Ray 配置指南（非官方）](https://toutyrater.github.io/)
+[V2Ray 配置指南（非官方）](https://toutyrater.github.io/)  
 [fhs-install-v2ray（一键部署v2ray）](https://github.com/v2fly/fhs-install-v2ray)
 
 ## 4. 如何在服务器端安装配置 V2Ray 服务
@@ -129,14 +129,12 @@ systemctl status v2ray
 
 ### 配置 V2Ray服务
 
-[SSH](#ssh-使用简要指南)中也包含SFTP的基本用法，如果不清楚清先查阅。
+[SSH](#ssh-使用简要指南)章节中也包含SFTP的基本用法，如果不清楚清先查阅。
 
 ```text
-你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows），甚至可以使用
-00000000-0000-0000-0000-000000000000
-作为v2ray配置中的clientId。
-更改sampleConfig.json中的clientId为新生成的id，并更改port的值为你想使用的端口号。
-然后使用SFTP上传该文件到远程服务器上（使用带有UI的SFTP客户端会让这件事更简单）。
+你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows），甚至可以使用00000000-0000-0000-0000-000000000000作为v2ray配置中的clientId。
+然后更改sampleConfig.json中的clientId为新生成的id，并更改port的值为你想使用的端口号。
+并使用SFTP上传该文件到远程服务器上（使用带有UI的SFTP客户端会让这件事更简单）。
 当提示 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 输入yes，此时yes处于不可见状态，但没关系，然后回车。
 当提示 xxxx@aaa.bbb.ccc.ddd's password: 时，输入你的服务器用户的密码。
@@ -148,16 +146,16 @@ systemctl status v2ray
 ```
 
 <img src="./images/SftpUploadConfigFile.png" alt="SftpUploadConfigFile" style="width: 100%; height: auto;">
-
-```text
-之后需要配置防火墙，允许通过上面使用的端口。
-在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。
-firewall-cmd --zone=public --add-port=端口号/tcp --permanent
-firewall-cmd --reload
-然后重启v2ray服务
-systemctl restart v2ray
-```
-
+</p>
+<div style="border: 1px solid #ddd; background: #000000ff; padding: 10px; border-radius: 5px;">
+之后需要配置防火墙，允许通过上面使用的端口。</p>
+在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。</p>
+firewall-cmd --zone=public --add-port=端口号/tcp --permanent</p>
+firewall-cmd --reload</p>
+然后重启v2ray服务</p>
+systemctl restart v2ray</p>
+</div>
+</p>
 <img src="./images/Firewall-cmd.png" alt="Firewall-cmd" style="width: 70%; height: auto;">
 
 ## 5. 如何在客户端配置安装 V2RayN / V2RayNG
