@@ -1,0 +1,15 @@
+{
+    "\\": {
+        "comments": [
+            "The markdown file is created in VSCode, this file is used for specifying the markdown behavior."
+        ]
+    },
+    "MD013": {
+        "line_length": 120
+    },
+    "MD033": {
+        "allowed_elements": [
+            "img"
+        ]
+    }
+}
