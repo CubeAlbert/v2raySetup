@@ -147,7 +147,7 @@ systemctl status v2ray
 
 <img src="./images/SftpUploadConfigFile.png" alt="SftpUploadConfigFile" style="width: 100%; height: auto;">
 </p>
-<div style="border: 1px solid #ddd; background: #000000ff; padding: 10px; border-radius: 5px;">
+<div style="border: 1px solid #ddd; background: #000000ff; padding: 10px; border-radius: 5px; font-family: 'Microsoft YaHei;">
 之后需要配置防火墙，允许通过上面使用的端口。</p>
 在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。</p>
 firewall-cmd --zone=public --add-port=端口号/tcp --permanent</p>
