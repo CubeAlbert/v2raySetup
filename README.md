@@ -94,7 +94,7 @@
 [Project V](https://www.v2ray.com/)：Project V（V2Ray）官方文档  
 [v2ray manual](https://github.com/v2ray/manual)：已过时，请查看 [V2Fly](https://github.com/v2fly/v2fly-github-io)。  
 [V2Ray 配置指南（非官方）](https://toutyrater.github.io/)
-[fhs-install-v2ray（一键部署v2ray）]("https://github.com/v2fly/fhs-install-v2ray")
+[fhs-install-v2ray（一键部署v2ray）](https://github.com/v2fly/fhs-install-v2ray)
 
 ## 4. 如何在服务器端安装配置 V2Ray 服务
 
@@ -102,6 +102,7 @@
 白话版： 如果你都不知道去哪里购买租赁服务器，那么本文不适合你，请使用第三方的服务。
 
 在此之前，请务必先了解[SSH](#ssh-使用简要指南)的用法。
+为简化操作，可安装带有用户界面的SSH&SFTP客户端，如
 
 ### 安装 V2Ray 服务
 
@@ -111,7 +112,7 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 当执行完毕后，看到有 info: V2Ray vX.XX.XX is installed. 的提示信息，即为安装完毕。
 ```
 
-<img src="./images/V2RayInstalled.png" alt="V2RayInstalledImage" style="width: 50%; height: auto;">
+<img src="./images/V2RayInstalled.png" alt="V2RayInstalledImage" style="width: 70%; height: auto;">
 
 ### 启用 V2Ray 服务
 
@@ -124,18 +125,40 @@ systemctl start v2ray
 systemctl status v2ray
 ```
 
-<img src="./images/V2RayServiceCreated.png" alt="V2RayServiceCreated" style="width: 50%; height: auto;">
+<img src="./images/V2RayServiceCreated.png" alt="V2RayServiceCreated" style="width: 70%; height: auto;">
 
 ### 配置 V2Ray服务
 
+[SSH](#ssh-使用简要指南)中也包含SFTP的基本用法，如果不清楚清先查阅。
+
 ```text
-你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows）。
+你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows），甚至可以使用
+00000000-0000-0000-0000-000000000000
+作为v2ray配置中的clientId。
+更改sampleConfig.json中的clientId为新生成的id，并更改port的值为你想使用的端口号。
+然后使用SFTP上传该文件到远程服务器上（使用带有UI的SFTP客户端会让这件事更简单）。
+当提示 Are you sure you want to continue connecting (yes/no/[fingerprint])?
+输入yes，此时yes处于不可见状态，但没关系，然后回车。
+当提示 xxxx@aaa.bbb.ccc.ddd's password: 时，输入你的服务器用户的密码。
+之后参考图片中各个命令的用法，来进入相应的目录，将配置文件上传到服务器上。
 
-
+这个地方需要注意的是，不同版本的服务端配置文件地址不一样，请参考systemctl status v2ray的输出中所显示的命令来确定配置文件所在的目录。
+例如上图中的： /usr/local/bin/v2ray run -config /usr/local/etc/v2ray/config.json
+意思就是当前使用的配置文件是/usr/local/etc/v2ray/config.json这个文件，使用SFTP替换配置文件的时候注意不要误替换其他文件。
 ```
 
+<img src="./images/SftpUploadConfigFile.png" alt="SftpUploadConfigFile" style="width: 100%; height: auto;">
 
+```text
+之后需要配置防火墙，允许通过上面使用的端口。
+在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。
+firewall-cmd --zone=public --add-port=端口号/tcp --permanent
+firewall-cmd --reload
+然后重启v2ray服务
+systemctl restart v2ray
+```
 
+<img src="./images/Firewall-cmd.png" alt="Firewall-cmd" style="width: 70%; height: auto;">
 
 ## 5. 如何在客户端配置安装 V2RayN / V2RayNG
 
