@@ -85,7 +85,7 @@
 
 ### 操作系统
 
-选择OS主要关乎长期维护成本、安全性和软件兼容性。对于运行代理服务（如v2ray, Xray）来说，主流选择是Linux发行版。
+选择OS主要关乎长期维护成本、安全性和软件兼容性。对于运行代理服务（如v2ray，Xray）来说，主流选择是Linux发行版。
 
 ```text
 选择建议：
@@ -109,8 +109,8 @@
 本文不对如何购买租赁服务器提供任何指导性意见，如有需要请自行研究学习。  
 白话版： 如果你都不知道去哪里购买租赁服务器，那么本文不适合你，请使用第三方的服务。
 
-在此之前，请务必先了解[SSH](#ssh-使用简要指南)的用法。
-为简化操作，可安装带有用户界面的SSH&SFTP客户端，如
+在此之前，请务必先了解 [SSH](#ssh-使用简要指南) 的用法。
+为简化操作，可安装带有用户界面的SSH&SFTP客户端，如 [WinSCP](https://github.com/winscp/winscp)，[FileZilla](https://filezilla-project.org/) 或者 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)。
 
 ### 安装 V2Ray 服务
 
@@ -137,7 +137,7 @@ systemctl status v2ray
 
 ### 配置 V2Ray服务
 
-[SSH](#ssh-使用简要指南)章节中也包含SFTP的基本用法，如果不清楚清先查阅。
+[SSH](#ssh-使用简要指南) 章节中也包含SFTP的基本用法，如果不清楚清先查阅。
 
 ```text
 你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows），甚至可以使用00000000-0000-0000-0000-000000000000作为v2ray配置中的clientId。
@@ -168,10 +168,10 @@ systemctl restart v2ray
 
 ## 5. 如何在客户端配置安装 V2RayN / V2RayNG
 
-[V2RayN](https://github.com/2dust/v2rayN)：V2RayN代码仓库，可在Release页获取已编译各桌面系统应用程序。  
-[V2RayNG](https://github.com/2dust/v2rayNG)：V2RayNG代码仓库，可在Release页获取已编译apk安装包。  
-此处仅以V2RayN为例，V2RayNG是Android应用，但配置思路与V2RayN大致相同。  
-**注意，V2Ray服务对时间同步性要求较高，务必保证客户端与服务端系统时间同步**  
+[V2RayN](https://github.com/2dust/v2rayN)：V2RayN 代码仓库，可在 Release 页获取已编译各桌面系统应用程序。  
+[V2RayNG](https://github.com/2dust/v2rayNG)：V2RayNG 代码仓库，可在 Release 页获取已编译 apk 安装包。  
+此处仅以 V2RayN 为例，V2RayNG 是 Android 应用，但配置思路与 V2RayN 大致相同。  
+**注意，V2Ray 服务对时间同步性要求较高，务必保证客户端与服务端系统时间同步**  
 （白话版：如果你自己的系统时间和真实时间差太多，那你自己手动调一下）
 
 ```text
@@ -193,36 +193,38 @@ systemctl restart v2ray
 最后检查是否可以使用代理打开需要代理的网址，如果成功代理的话，应用日志会显示proxy字样。
 ```
 
-<img src="./images/V2RayNGAddVMessConfig.png" alt="V2RayNGAddVMessConfig" style="width: 70%; height: auto;">
-<img src="./images/V2RayNGSetttings.png" alt="V2RayNGSetttings" style="width: 70%; height: auto;">
-<img src="./images/V2RayNGTrayIcon.png" alt="V2RayNGTrayIcon" style="width: 30%; height: auto;">
-
+<img src="./images/V2RayNAddVMessConfig.png" alt="V2RayNAddVMessConfig" style="width: 70%; height: auto;">  
+<img src="./images/V2RayNSetttings.png" alt="V2RayNSetttings" style="width: 70%; height: auto;">  
+<img src="./images/V2RayNTrayIcon.png" alt="V2RayNTrayIcon" style="width: 30%; height: auto;">  
 
 ## ping 使用指南
 
-    TODO  
-<img src="./images/PingServer.png" alt="PingServerImage" style="width: 30%; height: auto;">
+```text
+
+```
+
+<img src="./images/PingServer.png" alt="PingServerImage" style="width: 50%; height: auto;">
 
 ## tracert 使用指南
 
-    TODO
+TODO
 
 ## iperf3 使用指南
 
-    TODO
+TODO
 
 ## SSH 使用简要指南
 
-    TODO
+TODO
 
 ## 防火墙端口配置
 
-    TODO
+TODO
 
 ## 关于ipv6
 
-  [Test Ipv6](https://test-ipv6.com)
-    TODO
+[Test Ipv6](https://test-ipv6.com)  
+TODO
 
 ## 题外话
 
