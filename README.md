@@ -146,16 +146,16 @@ systemctl status v2ray
 ```
 
 <img src="./images/SftpUploadConfigFile.png" alt="SftpUploadConfigFile" style="width: 100%; height: auto;">
-</p>
-<div style="border: 1px solid #000000ff; background: #000000ff; padding: 10px; border-radius: 5px; font-family: 'Microsoft YaHei;">
-之后需要配置防火墙，允许通过上面使用的端口。</p>
-在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。</p>
-firewall-cmd --zone=public --add-port=端口号/tcp --permanent</p>
-firewall-cmd --reload</p>
-然后重启v2ray服务</p>
-systemctl restart v2ray</p>
-</div>
-</p>
+
+```text
+之后需要配置防火墙，允许通过上面使用的端口。
+在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。
+firewall-cmd --zone=public --add-port=端口号/tcp --permanent
+firewall-cmd --reload
+然后重启v2ray服务
+systemctl restart v2ray
+```
+
 <img src="./images/Firewall-cmd.png" alt="Firewall-cmd" style="width: 70%; height: auto;">
 
 ## 5. 如何在客户端配置安装 V2RayN / V2RayNG
