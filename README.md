@@ -233,8 +233,8 @@ TTL=dd：通常ping Linux 服务器的时候，初始值为64，Windows 为128�
 理论上讲，跃点数越少，延迟越低，链路更优。
 ```
 
-<img src="./images/Tracert.png" alt="Tracert" style="width: 50%; height: auto;">  
-<img src="./images/Tracert6.png" alt="Tracert6" style="width: 50%; height: auto;">
+<img src="./images/Tracert.png" alt="Tracert" style="width: 70%; height: auto;">  
+<img src="./images/Tracert6.png" alt="Tracert6" style="width: 70%; height: auto;">
 
 ## iperf3 使用指南
 
