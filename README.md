@@ -220,7 +220,21 @@ TTL=dd：通常ping Linux 服务器的时候，初始值为64，Windows 为128�
 
 ## tracert 使用指南
 
-TODO
+[tracert(Windows)](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tracert)
+ 和 [traceroute(Linux)](https://man7.org/linux/man-pages/man8/traceroute.8.html) 类似，但是并不完全相同，感兴趣请自行阅读文档，此处仅以 tracert 为例。
+
+```text
+使用 tracert [-4] <IPv4_IP> 以及 tracert -6 <IPv6_IP> 来观察路由链路。
+需要注意的是，在追踪记录中，请求超时可能是因为当前的路由不回复 tracert 的探测请求，但只要后续有返回，则链路仍是正常的。
+只要最后显示追踪完成，那么整条网络链路在理论上就没有问题。
+（同样的，即是最后一直超时，也并不意味着代理网络连接不能建立，可能存在会丢弃数据包的路由或者你的服务器禁用了ICMP协议，小白可以忽略）
+
+如下面两图显示，IPv4 IP和IPv6 IP的测试结果并不相同，可以根据跃点数和延迟来选择更优的连接。
+理论上讲，跃点数越少，延迟越低，链路更优。
+```
+
+<img src="./images/Tracert.png" alt="Tracert" style="width: 50%; height: auto;">  
+<img src="./images/Tracert6.png" alt="Tracert6" style="width: 50%; height: auto;">
 
 ## iperf3 使用指南
 
