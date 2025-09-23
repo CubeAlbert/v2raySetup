@@ -199,8 +199,20 @@ systemctl restart v2ray
 
 ## ping 使用指南
 
-```text
+仅以 Windows 下的 ping 命令为例讲解， 源
+ [ping](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/ping)。  
+关于 Linux 下的 ping 命令，请参考[此处](https://man7.org/linux/man-pages/man8/ping.8.html)。
 
+```text
+如下图所示，当使用 ping 命令验证连接情况时，首先检查是否能够连通。  
+当出现连接超时时，意味着这台服务器对你当前网络不可达，也就是不可用做代理服务器。（前提是服务端没有禁用ICMP协议, 关于ICMP协议不做展开）
+当服务器可达时，会收到如下提示：
+来自 aaa.aaa.aaa.aaa 的回复：字节=bb 时间=cccms TTL=dd
+接下来逐词解析，
+来自 aaa.aaa.aaa.aaa 的回复：意味着这台服务器可以ping通，理论上讲可以用作代理服务器，但是还要检查是否能建立TCP/UDP连接。(ICMP是网络层协议，与TCP/UDP不同级)
+字节=bb：可用来测试到服务器链路的MTU，小白可以忽略该字段，只要有返回值就行。（并不推荐去修改服务器的MSS，当你的网络环境变化后，反而会带来性能问题）
+时间=cccms：ccc是网络延迟，理论上讲这个值越低，你的代理服务连接延迟就越低，体验就越好。（只是理论上，实际上影响因素众多）
+TTL=dd：通常ping Linux 服务器的时候，初始值为64，Windows 为128。这个值与初始值的差值意味着你到这个服务器的路由次数，差值越小，网络复杂度越低，理论上讲更优。
 ```
 
 <img src="./images/PingServer.png" alt="PingServerImage" style="width: 50%; height: auto;">
