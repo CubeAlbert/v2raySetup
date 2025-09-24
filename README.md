@@ -117,7 +117,7 @@
 
 ```text
 SSH连接到远程服务器后，使用以下一键部署脚本。
-bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+  bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 当执行完毕后，看到有 info: V2Ray vX.XX.XX is installed. 的提示信息，即为安装完毕。
 ```
 
@@ -128,10 +128,10 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 ```text
 经过上述步骤，V2Ray的组件已经成功安装到了服务器上，但是服务还未启用。
 继续执行以下两条命令来启用并启动服务。
-systemctl enable v2ray
-systemctl start v2ray
+  systemctl enable v2ray
+  systemctl start v2ray
 最后执行以下命令来检查服务状态。
-systemctl status v2ray
+  systemctl status v2ray
 ```
 
 <img src="./images/V2RayServiceCreated.png" alt="V2RayServiceCreated" style="width: 70%; height: auto;">
@@ -141,7 +141,7 @@ systemctl status v2ray
 [SSH](#ssh-使用简要指南) 章节中也包含SFTP的基本用法，如果不清楚清先查阅。
 
 ```text
-你需要一个UUID，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows），甚至可以使用00000000-0000-0000-0000-000000000000作为v2ray配置中的clientId。
+首先你需要一个UUID作为配置中的clientId，可以使用在线工具生成，也可以使用同目录下的UUIDGenerator.bat来获取（Windows），甚至可以使用00000000-0000-0000-0000-000000000000。
 然后更改sampleConfig.json中的clientId为新生成的id，并更改port的值为你想使用的端口号。
 并使用SFTP上传该文件到远程服务器上（使用带有UI的SFTP客户端会让这件事更简单）。
 当提示 Are you sure you want to continue connecting (yes/no/[fingerprint])?
@@ -159,10 +159,10 @@ systemctl status v2ray
 ```text
 之后需要配置防火墙，允许通过上面使用的端口。
 在SSH终端中执行如下命令，替换下面的端口号几个字为你上面配置文件中使用的端口号。
-firewall-cmd --zone=public --add-port=端口号/tcp --permanent
-firewall-cmd --reload
+  firewall-cmd --zone=public --add-port=端口号/tcp --permanent
+  firewall-cmd --reload
 然后重启v2ray服务
-systemctl restart v2ray
+  systemctl restart v2ray
 ```
 
 <img src="./images/Firewall-cmd.png" alt="Firewall-cmd" style="width: 70%; height: auto;">
@@ -208,12 +208,12 @@ systemctl restart v2ray
 如下图所示，当使用 ping 命令验证连接情况时，首先检查是否能够连通。  
 当出现连接超时时，意味着这台服务器对你当前网络不可达，也就是不可用做代理服务器。（前提是服务端没有禁用ICMP协议, 关于ICMP协议不做展开）
 当服务器可达时，会收到如下提示：
-来自 aaa.aaa.aaa.aaa 的回复：字节=bb 时间=cccms TTL=dd
+  来自 aaa.aaa.aaa.aaa 的回复：字节=bb 时间=cccms TTL=dd
 接下来逐词解析，
-来自 aaa.aaa.aaa.aaa 的回复：意味着这台服务器可以ping通，理论上讲可以用作代理服务器，但是还要检查是否能建立TCP/UDP连接。(ICMP是网络层协议，与TCP/UDP不同级)
-字节=bb：可用来测试到服务器链路的MTU，小白可以忽略该字段，只要有返回值就行。（并不推荐去修改服务器的MSS，当你的网络环境变化后，反而会带来性能问题）
-时间=cccms：ccc是网络延迟，理论上讲这个值越低，你的代理服务连接延迟就越低，体验就越好。（只是理论上，实际上影响因素众多）
-TTL=dd：通常ping Linux 服务器的时候，初始值为64，Windows 为128。这个值与初始值的差值意味着你到这个服务器的路由次数，差值越小，网络复杂度越低，理论上讲更优。
+  来自 aaa.aaa.aaa.aaa 的回复：意味着这台服务器可以ping通，理论上讲可以用作代理服务器，但是还要检查是否能建立TCP/UDP连接。(ICMP是网络层协议，与TCP/UDP不同级)
+  字节=bb：可用来测试到服务器链路的MTU，小白可以忽略该字段，只要有返回值就行。（并不推荐去修改服务器的MSS，当你的网络环境变化后，反而会带来性能问题）
+  时间=cccms：ccc是网络延迟，理论上讲这个值越低，你的代理服务连接延迟就越低，体验就越好。（只是理论上，实际上影响因素众多）
+  TTL=dd：通常ping Linux 服务器的时候，初始值为64，Windows 为128。这个值与初始值的差值意味着你到这个服务器的路由次数，差值越小，网络复杂度越低，理论上讲更优。
 ```
 
 <img src="./images/PingServer.png" alt="PingServerImage" style="width: 50%; height: auto;">
@@ -238,7 +238,29 @@ TTL=dd：通常ping Linux 服务器的时候，初始值为64，Windows 为128�
 
 ## iperf3 使用指南
 
-TODO
+[iperf3](https://iperf.fr/) 是一款用来测量最大网络带宽的工具，它可以帮你测试你的客户端到服务端连接的最大带宽。
+
+```text
+首先先在服务端安装 iperf3，如上文我使用的是CentOS，那直接执行如下命令即可。
+  yum install iperf3
+iperf3 在服务端的默认端口是 5201，但是也可以使用 -p 参数指定需要使用的端口。
+需要注意的是，务必将要使用的端口添加到防火墙例外中。（请参考后面的端口配置段落）
+之后在服务端使用如下命令启动监听。（并不推荐使用 -D 参数，避免有人恶意刷服务器流量）
+  iperf3 -s
+回到客户端，使用如下两条命令分别测试 
+  iperf3.exe -c [IP]
+  iperf3.exe -c [IP] -reverse
+（如果你看得懂输出，可以直接使用 iperf3.exe -c [IP] -d 来做双向测试）
+测试结束后，服务端使用 Ctrl+C 快捷键退出 iperf3，亦可按需再关闭防火墙端口。
+
+以下面两张图为例，
+第一张图是测试客户端上传，第二张图是测试客户端下载，需要关注的是 Transfer 字段和 Bitrate 字段。
+Transfer 字段显示了发送方发出了多大的数据包，接收方接受了多大的数据包，两方的差值较大的时候，说明当前网络链路的状况不佳，有丢包情况。
+Bitrate 字段显示了发送接收速率，可以作为连接速率的参考。
+```
+
+<img src="./images/Iperf_Client.png" alt="Iperf_Client" style="width: 70%; height: auto;">  
+<img src="./images/Iperf_Client_Reverse.png" alt="Iperf_Client_Reverse" style="width: 70%; height: auto;">  
 
 ## SSH 使用简要指南
 
