@@ -268,7 +268,23 @@ TODO
 
 ## 防火墙端口配置
 
-TODO
+此处仅以 CentOS 为例讲解 [firewalld](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/using-and-configuring-firewalld_configuring-and-managing-networking)
+ 的用法，关于 [iptables](https://man7.org/linux/man-pages/man8/iptables.8.html)
+ 和 [ufw](https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29) 请参考文档。
+
+```text
+此处仅列举几个常用的命令，
+查看防火墙服务是否运行：
+  systemctl status firewalld
+查看当前防火墙配置：
+  firewall-cmd --list-all
+永久允许指定端口和协议通过（根据需要来设置端口和协议）：
+  firewall-cmd --zone=public --add-port=8080/tcp --permanent
+永久阻止指定端口和协议通过（根据需要来设置端口和协议）：
+  firewall-cmd --zone=public --remove-port=8080/tcp --permanent
+在允许/组织端口协议后，刷新配置使其生效：
+  firewall-cmd --reload
+```
 
 ## 关于IPv6
 
