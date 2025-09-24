@@ -220,8 +220,8 @@ SSH连接到远程服务器后，使用以下一键部署脚本。
 
 ## tracert 使用指南
 
-[tracert(Windows)](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tracert)
- 和 [traceroute(Linux)](https://man7.org/linux/man-pages/man8/traceroute.8.html) 类似，但是并不完全相同，感兴趣请自行阅读文档，此处仅以 tracert 为例。
+[tracert（Windows）](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tracert)
+ 和 [traceroute（Linux）](https://man7.org/linux/man-pages/man8/traceroute.8.html) 类似，但是并不完全相同，感兴趣请自行阅读文档，此处仅以 tracert 为例。
 
 ```text
 使用 tracert [-4] <IPv4_IP> 以及 tracert -6 <IPv6_IP> 来观察路由链路。
@@ -264,7 +264,18 @@ Bitrate 字段显示了发送接收速率，可以作为连接速率的参考。
 
 ## SSH 使用简要指南
 
-TODO
+本文提到的SSH（Secure Shell）仅指 [OpenSSH](https://www.openssh.com/)，如果你的服务器使用其他的 SSH 实现，请参考具体的官方文档。
+
+```text
+从 Windows10 开始，OpenSSH客户端已经默认集成，可以直接通过终端命令行来使用。如果你对命令行不熟悉，建议直接使用带UI的连接工具。
+通过如下命令来连接到服务器：
+  ssh [username]@[host]
+之后按提示接受服务器的 public key，并输入密码，连接建立后可以使用终端来执行命令。
+
+如有需要可以配置公钥认证，之后连接无需再使用密码，并且可禁用密码登录，此处不做展开。
+
+在执行完命令，使用 exit 断开连接。 Ctrl + C会被捕获，无法用来断开 ssh 的连接。
+```
 
 ## 防火墙端口配置
 
@@ -282,7 +293,7 @@ TODO
   firewall-cmd --zone=public --add-port=8080/tcp --permanent
 永久阻止指定端口和协议通过（根据需要来设置端口和协议）：
   firewall-cmd --zone=public --remove-port=8080/tcp --permanent
-在允许/组织端口协议后，刷新配置使其生效：
+在允许/阻止端口协议后，刷新配置使其生效：
   firewall-cmd --reload
 ```
 
@@ -309,5 +320,4 @@ IPv6是什么网上说的很多了，这里讲一下为什么代理服务器最�
 3. 技术学习与研究：了解代理协议的工作原理、学习网络配置，是网络与运维领域非常有价值的实践技能。
 ```
 
-v2ray 是一个优秀的开源网络代理工具，其功能强大且灵活。本文的重点是介绍如何利用它来实现各种合法的网络应用场景。  
-技术本身是中立的，它就像一把钥匙，既能用于连接更广阔的世界、优化网络性能，也能用于守护内部网络的安全。
+v2ray 是一个优秀的开源网络代理工具，其功能强大且灵活。本文的重点是介绍如何利用它来实现各种网络应用场景。
